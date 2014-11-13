@@ -1,14 +1,27 @@
 package com.ist.ssoft.ssoftproject;
 
-import android.os.Bundle;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
-import android.annotation.TargetApi;
-import android.os.Build;
+import android.view.View;
+import android.widget.EditText;
 
 public class LoginActivity extends Activity {
+
+	private SQLiteDatabase db;
+	public static final String USERNAME = "com.ist.ssoft.ssoftproject.USERNAME";
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +63,41 @@ public class LoginActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void attemptToLoging(View view){
+		String username;
+		String password;
+		Intent intent;
+		
+		EditText usernameEditText = (EditText) findViewById(R.id.usernameLogin);
+		EditText passwordEditText = (EditText) findViewById(R.id.passwordLogin);
+		username = usernameEditText.getText().toString();
+		password = passwordEditText.getText().toString();
+		
+		this.db = openOrCreateDatabase("UserDB", Context.MODE_PRIVATE, null);
+		db.execSQL("CREATE TABLE IF NOT EXISTS user(username VARCHAR,email VARCHAR,password VARCHAR);");
+		
+		 Cursor c = db.rawQuery("SELECT * FROM user WHERE username='"+username+"' AND password='"+password+"'", null);
+		 
+		 if(c.moveToFirst()){
+			 intent = new Intent(this, GameActivity.class);
+			 intent.putExtra(USERNAME, username);
+			 startActivity(intent);
+		 }else{
+			 AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			 
+			 alertDialog.setTitle("WRONG FIELDS!");
+			 alertDialog.setMessage("User does not exist.");
+			 alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+		 }
 	}
 
 }

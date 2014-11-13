@@ -38,6 +38,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ist.ssoft.ssoftproject.MainActivity" />
         </activity>
+        <activity
+            android:name="com.ist.ssoft.ssoftproject.GameActivity"
+            android:label="@string/title_activity_game" >
+        </activity>
     </application>
 
 </manifest>
