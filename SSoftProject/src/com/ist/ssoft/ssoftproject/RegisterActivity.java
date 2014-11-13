@@ -3,16 +3,25 @@ package com.ist.ssoft.ssoftproject;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class RegisterActivity extends Activity {
 
 	SQLiteDatabase db;
+	EditText editUsername;
+	EditText editEmail;
+	EditText editPassword;
 	
 	
 	@Override
@@ -22,10 +31,40 @@ public class RegisterActivity extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
+		editUsername = (EditText)findViewById(R.id.usernameEditText);
+		editEmail = (EditText)findViewById(R.id.emailEditText);
+		editPassword = (EditText)findViewById(R.id.passwordEditText);
+		
 		db=openOrCreateDatabase("UserDB", Context.MODE_PRIVATE, null);
 		db.execSQL("CREATE TABLE IF NOT EXISTS user(username VARCHAR,email VARCHAR,password VARCHAR);");
+		db.execSQL("CREATE TABLE IF NOT EXISTS userPremium(username VARCHAR,premium BOOLEAN);");
+		db.execSQL("CREATE TABLE IF NOT EXISTS userPoints(username VARCHAR,points BIGINT);");
+		
+		final Button registerButton = (Button) findViewById(R.id.register_button);
+        registerButton.setOnClickListener(btnRegisterListener);
 	}
 
+	
+	public OnClickListener btnRegisterListener=
+			new View.OnClickListener() {		
+		@Override
+        public void onClick(View v) {
+			
+			Cursor c = db.rawQuery("SELECT * FROM user WHERE username='"+editUsername.getText()+"' OR email='"+editEmail.getText()+"'", null);
+			if(c.getCount() == 0) {
+				db.execSQL("INSERT INTO user VALUES('"+editUsername.getText()+"','"+
+						editEmail.getText()+"','"+editPassword.getText()+"');");
+				db.execSQL("INSERT INTO userPremium VALUES('"+editUsername.getText()+"','FALSE');");
+				db.execSQL("INSERT INTO userPoints VALUES('"+editUsername.getText()+"','0');");
+				
+	        	Intent myIntent = new Intent(RegisterActivity.this, RegisterActivity.class);
+	        	RegisterActivity.this.startActivity(myIntent);
+			} else {
+				//ERRRORRORORORORROR
+			}
+        }
+    };
+	
 	/**
 	 * Set up the {@link android.app.ActionBar}, if the API is available.
 	 */
