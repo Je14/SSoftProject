@@ -22,6 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.ist.ssoft.ssoftproject.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:parentActivityName="com.ist.ssoft.ssoftproject.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ist.ssoft.ssoftproject.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.ist.ssoft.ssoftproject.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName="com.ist.ssoft.ssoftproject.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ist.ssoft.ssoftproject.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
