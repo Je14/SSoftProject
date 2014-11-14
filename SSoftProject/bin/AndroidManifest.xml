@@ -42,6 +42,10 @@
             android:name="com.ist.ssoft.ssoftproject.GameActivity"
             android:label="@string/title_activity_game" >
         </activity>
+        <activity
+            android:name="com.ist.ssoft.ssoftproject.ShopActivity"
+            android:label="@string/title_activity_shop" >
+        </activity>
     </application>
 
 </manifest>

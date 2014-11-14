@@ -82,7 +82,9 @@ public class LoginActivity extends Activity {
 		 
 		 if(c.moveToFirst()){
 			 intent = new Intent(this, GameActivity.class);
-			 intent.putExtra(USERNAME, username);
+			 Bundle bundle = new Bundle();
+			 bundle.putString("username", c.getString(0));
+			 intent.putExtras(bundle);
 			 startActivity(intent);
 		 }else{
 			 AlertDialog alertDialog = new AlertDialog.Builder(this).create();

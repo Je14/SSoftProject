@@ -10,5 +10,11 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="title_activity_game">GameActivity</string>
+    <string name="GetPoint">Get a Point!</string>
+    <string name="Points">Points:</string>
+    <string name="shop">Go to Shop</string>
+    <string name="doublePoints">Double Points!</string>
+    <string name="premium">Be Premium</string>
+    <string name="title_activity_shop">ShopActivity</string>
 
 </resources>

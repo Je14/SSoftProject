@@ -61,7 +61,9 @@ public class RegisterActivity extends Activity {
 				db.execSQL("INSERT INTO userPoints VALUES('"+editUsername.getText()+"','0');");
 				
 	        	Intent intent = new Intent(RegisterActivity.this, GameActivity.class);
-				intent.putExtra(USERNAME, editUsername.getText());
+	        	Bundle bundle = new Bundle();
+	        	bundle.putString("username", editUsername.getText().toString());
+				intent.putExtras(bundle);
 	        	RegisterActivity.this.startActivity(intent);
 			} else {
 				AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
