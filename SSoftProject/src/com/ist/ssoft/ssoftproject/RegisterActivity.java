@@ -2,7 +2,9 @@ package com.ist.ssoft.ssoftproject;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,10 +20,11 @@ import android.widget.EditText;
 
 public class RegisterActivity extends Activity {
 
-	SQLiteDatabase db;
-	EditText editUsername;
-	EditText editEmail;
-	EditText editPassword;
+	public static final String USERNAME = "com.ist.ssoft.ssoftproject.USERNAME";
+	private SQLiteDatabase db;
+	private EditText editUsername;
+	private EditText editEmail;
+	private EditText editPassword;
 	
 	
 	@Override
@@ -57,10 +60,22 @@ public class RegisterActivity extends Activity {
 				db.execSQL("INSERT INTO userPremium VALUES('"+editUsername.getText()+"','FALSE');");
 				db.execSQL("INSERT INTO userPoints VALUES('"+editUsername.getText()+"','0');");
 				
-	        	Intent myIntent = new Intent(RegisterActivity.this, RegisterActivity.class);
-	        	RegisterActivity.this.startActivity(myIntent);
+	        	Intent intent = new Intent(RegisterActivity.this, GameActivity.class);
+				intent.putExtra(USERNAME, editUsername.getText());
+	        	RegisterActivity.this.startActivity(intent);
 			} else {
-				//ERRRORRORORORORROR
+				AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
+				 
+				 alertDialog.setTitle("WRONG FIELDS!");
+				 alertDialog.setMessage("User does not exist.");
+				 alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 			}
         }
     };
