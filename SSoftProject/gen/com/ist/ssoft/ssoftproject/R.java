@@ -25,8 +25,9 @@ public final class R {
         public static final int round_button=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000f;
+        public static final int action_settings=0x7f080016;
         public static final int attempt_register_button=0x7f08000e;
+        public static final int button1=0x7f080012;
         public static final int doublePoints=0x7f080005;
         public static final int emailEditText=0x7f08000c;
         public static final int getPoint=0x7f080000;
@@ -37,7 +38,13 @@ public final class R {
         public static final int points=0x7f080003;
         public static final int premium=0x7f080004;
         public static final int register_button=0x7f08000a;
+        public static final int scrollView1=0x7f08000f;
         public static final int shop=0x7f080002;
+        public static final int tableRow1=0x7f080010;
+        public static final int tableRow2=0x7f080013;
+        public static final int tableRow3=0x7f080014;
+        public static final int tableRow4=0x7f080015;
+        public static final int textView1=0x7f080011;
         public static final int textView2=0x7f080001;
         public static final int usernameEditText=0x7f08000d;
         public static final int usernameLogin=0x7f080006;
@@ -62,8 +69,10 @@ public final class R {
         public static final int double_points=0x7f05000c;
         public static final int email=0x7f050005;
         public static final int error_field_required=0x7f05000f;
+        public static final int example_shop1=0x7f050012;
         public static final int get_point=0x7f050009;
         public static final int hello_world=0x7f050002;
+        public static final int hundred_points=0x7f050013;
         public static final int login=0x7f050011;
         public static final int password=0x7f050007;
         public static final int points=0x7f05000a;

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
@@ -32,14 +31,12 @@ public class GameActivity extends Activity {
 		
 		username = getIntent().getExtras().getString("username");
 		
-		 Cursor c = db.rawQuery("SELECT * FROM userPoints WHERE username='"+username+"'", null);
-		 Log.d("TESTE", "Tamanho da query = "+ c.getCount());
-		 if(c.moveToFirst()) {
-			 int points = c.getInt(1);
-			 Log.d("TESTE", "Pontos = "+ points);
+		Cursor c = db.rawQuery("SELECT * FROM userPoints WHERE username='"+username+"'", null);
+		if(c.moveToFirst()) {
+			int points = c.getInt(1);
 			 		 
-			 pointTextView.setText(Integer.toString(points));
-		 }
+			pointTextView.setText(Integer.toString(points));
+		}
 
 
 	}
