@@ -25,23 +25,22 @@ public final class R {
         public static final int round_button=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f080010;
-        public static final int attempt_register_button=0x7f08000f;
+        public static final int action_settings=0x7f08000f;
+        public static final int attempt_register_button=0x7f08000e;
         public static final int doublePoints=0x7f080005;
-        public static final int emailEditText=0x7f08000d;
+        public static final int emailEditText=0x7f08000c;
         public static final int getPoint=0x7f080000;
-        public static final int loginButton=0x7f080006;
+        public static final int loginButton=0x7f080008;
         public static final int login_button=0x7f080009;
-        public static final int passwordEditText=0x7f08000c;
-        public static final int passwordLogin=0x7f080008;
+        public static final int passwordEditText=0x7f08000b;
+        public static final int passwordLogin=0x7f080007;
         public static final int points=0x7f080003;
         public static final int premium=0x7f080004;
         public static final int register_button=0x7f08000a;
         public static final int shop=0x7f080002;
-        public static final int textView1=0x7f08000b;
         public static final int textView2=0x7f080001;
-        public static final int usernameEditText=0x7f08000e;
-        public static final int usernameLogin=0x7f080007;
+        public static final int usernameEditText=0x7f08000d;
+        public static final int usernameLogin=0x7f080006;
     }
     public static final class layout {
         public static final int activity_game=0x7f030000;
@@ -58,17 +57,18 @@ public final class R {
         public static final int shop=0x7f070004;
     }
     public static final class string {
-        public static final int GetPoint=0x7f050009;
-        public static final int Points=0x7f05000a;
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
-        public static final int doublePoints=0x7f05000c;
+        public static final int double_points=0x7f05000c;
         public static final int email=0x7f050005;
+        public static final int error_field_required=0x7f05000f;
+        public static final int get_point=0x7f050009;
         public static final int hello_world=0x7f050002;
-        public static final int login=0x7f050010;
+        public static final int login=0x7f050011;
         public static final int password=0x7f050007;
+        public static final int points=0x7f05000a;
         public static final int premium=0x7f05000d;
-        public static final int register=0x7f05000f;
+        public static final int register=0x7f050010;
         public static final int shop=0x7f05000b;
         public static final int title_activity_game=0x7f050008;
         public static final int title_activity_login=0x7f050003;

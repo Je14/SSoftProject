@@ -10,11 +10,12 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="title_activity_game">GameActivity</string>
-    <string name="GetPoint">Get a Point!</string>
-    <string name="Points">Points:</string>
+    <string name="get_point">Get a Point!</string>
+    <string name="points">Points:</string>
     <string name="shop">Go to Shop</string>
-    <string name="doublePoints">Double Points!</string>
+    <string name="double_points">Double Points!</string>
     <string name="premium">Be Premium</string>
     <string name="title_activity_shop">ShopActivity</string>
+    <string name="error_field_required">Error: Field is Required</string>
 
 </resources>

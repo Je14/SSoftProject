@@ -16,7 +16,7 @@
         android:layout_centerVertical="true"
         android:background="@drawable/round_button"
         android:gravity="center_vertical"
-        android:text="@string/GetPoint" 
+        android:text="@string/get_point" 
         android:onClick="getPoint"/>
 
     <TextView
@@ -26,7 +26,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="15dp"
-        android:text="@string/Points" />
+        android:text="@string/points" />
 
     <Button
         android:id="@+id/shop"
@@ -49,18 +49,18 @@
         android:id="@+id/premium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignParentBottom="true"
-        android:text="@string/premium" 
-        android:onClick="bePremium"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="bePremium"
+        android:text="@string/premium" />
 
     <Button
         android:id="@+id/doublePoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/premium"
-        android:text="@string/doublePoints" 
-        android:onClick="doublePoints"/>
+        android:layout_alignParentLeft="true"
+        android:onClick="doublePoints"
+        android:text="@string/double_points" />
 
 </RelativeLayout>

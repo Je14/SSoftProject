@@ -2,24 +2,27 @@ package com.ist.ssoft.ssoftproject;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 
 	private SQLiteDatabase db;
+	EditText editUsername;
+	EditText editPassword;
 	public static final String USERNAME = "com.ist.ssoft.ssoftproject.USERNAME";
 	
 
@@ -29,6 +32,13 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
+		editUsername = (EditText) findViewById(R.id.usernameLogin);
+		editPassword = (EditText) findViewById(R.id.passwordLogin);
+
+		
+		this.db = openOrCreateDatabase("UserDB", Context.MODE_PRIVATE, null);
+		db.execSQL("CREATE TABLE IF NOT EXISTS user(username VARCHAR,email VARCHAR,password VARCHAR);");
 	}
 
 	/**
@@ -66,40 +76,68 @@ public class LoginActivity extends Activity {
 	}
 	
 	public void attemptToLoging(View view){
-		String username;
-		String password;
+		
 		Intent intent;
 		
-		EditText usernameEditText = (EditText) findViewById(R.id.usernameLogin);
-		EditText passwordEditText = (EditText) findViewById(R.id.passwordLogin);
-		username = usernameEditText.getText().toString();
-		password = passwordEditText.getText().toString();
-		
-		this.db = openOrCreateDatabase("UserDB", Context.MODE_PRIVATE, null);
-		db.execSQL("CREATE TABLE IF NOT EXISTS user(username VARCHAR,email VARCHAR,password VARCHAR);");
-		
-		 Cursor c = db.rawQuery("SELECT * FROM user WHERE username='"+username+"' AND password='"+password+"'", null);
-		 
-		 if(c.moveToFirst()){
-			 intent = new Intent(this, GameActivity.class);
-			 Bundle bundle = new Bundle();
-			 bundle.putString("username", c.getString(0));
-			 intent.putExtras(bundle);
-			 startActivity(intent);
-		 }else{
-			 AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-			 
-			 alertDialog.setTitle("WRONG FIELDS!");
-			 alertDialog.setMessage("User does not exist.");
-			 alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+		// Values for username and password at the time of the login attempt.
+		String mUsername;
+		String mPassword;
 					
+					
+		// Reset errors.
+		editUsername.setError(null);
+		editPassword.setError(null);
+
+		// Store values at the time of the register attempt.
+		mUsername = editUsername.getText().toString();
+		mPassword = editPassword.getText().toString();
+					
+		boolean cancel = false;
+		View focusView = null;
+					
+		// Check for a valid password.
+		if (TextUtils.isEmpty(mPassword)) {
+			editPassword.setError(getString(R.string.error_field_required));
+			focusView = editPassword;
+			cancel = true;
+			} /*else if (mPassword.length() < 4) {
+				mPasswordView.setError(getString(R.string.error_invalid_password));
+				focusView = mPasswordView;
+				cancel = true;
+			} */
+
+		// Check for a valid username.
+		if (TextUtils.isEmpty(mUsername)) {
+			editUsername.setError(getString(R.string.error_field_required));
+			focusView = editUsername;
+			cancel = true;
+			} 
+
+		if (cancel) {
+			// There was an error; don't attempt login and focus the first
+			// form field with an error.
+			focusView.requestFocus();
+		} else {
+			Cursor c = db.rawQuery("SELECT * FROM user WHERE username='"+mUsername+"' AND password='"+mPassword+"'", null);
+			 
+			 if(c.moveToFirst()){
+				 intent = new Intent(this, GameActivity.class);
+				 Bundle bundle = new Bundle();
+				 bundle.putString("username", c.getString(0));
+				 intent.putExtras(bundle);
+				 startActivity(intent);
+			} else {
+				Toast toast = Toast.makeText(getApplicationContext(), "Wrong Username or Password!", Toast.LENGTH_LONG);
+				TextView toastV = (TextView) toast.getView().findViewById(android.R.id.message);
+				if( toastV != null){
+					toastV.setGravity(Gravity.CENTER);
 				}
-			});
-		 }
+				toast.show();
+				editUsername.requestFocus();
+			}
+
+		}
+					
 	}
 
 }
