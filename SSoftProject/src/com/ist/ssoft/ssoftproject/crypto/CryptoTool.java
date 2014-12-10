@@ -4,102 +4,72 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
-
-import android.util.Base64;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
 
 public class CryptoTool {
-	private static final String cryptoSpec = "AES";
-	private static final String defaultB64KeyString = "rB5eoceHKk0yrM8HXbcXSSezFauGvK5Fp8k4PlLIjHQ=";
+	private static final String defaultB64KeyString = "3qQJoumR";
 	
 	public CryptoTool() {
 		
 	}
-	
-	public void encrypt(String pathTofile, String pathToEncryptedFile) {
-		SecretKeySpec keySpec = null;
+	public void encrypt(String pathTofile, String  pathToEncryptedFile){
+		FileInputStream is;
 		try {
-			// Here you read the file.
-		    FileInputStream fis = new FileInputStream(pathTofile);
-		    // This stream write the encrypted text. This stream will be wrapped by another stream.
-		    FileOutputStream fos = new FileOutputStream(pathToEncryptedFile);
-		    
-			byte[] keyBytes = Base64.decode(defaultB64KeyString.getBytes("utf-8"),Base64.DEFAULT);
-			keySpec = new SecretKeySpec(keyBytes, "AES");
-			Cipher cipher = Cipher.getInstance(cryptoSpec);
-			cipher.init(Cipher.ENCRYPT_MODE, keySpec);
-			CipherOutputStream cos = new CipherOutputStream(fos, cipher);
-			
-			// Write bytes
-		    int b;
-		    byte[] d = new byte[8];
-		    while((b = fis.read(d)) != -1) {
-		        cos.write(d, 0, b);
-		    }
-		    // Flush and close streams.
-		    cos.flush();
-		    cos.close();
-		    fis.close();
-			
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			is = new FileInputStream(pathTofile);
+			FileOutputStream os;
+			os = new FileOutputStream(pathToEncryptedFile);
+			encryptOrDecrypt(defaultB64KeyString, Cipher.ENCRYPT_MODE, is, os);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public void decrypt(String pathToEncryptedFile, String pathTofile) {
-		SecretKeySpec keySpec = null;
+
+	public void decrypt(String pathToEncryptedFile, String pathTofile){
+
 		try {
-			
-			// Here you read the file.
-		    FileInputStream fis = new FileInputStream(pathToEncryptedFile);
-		    // This stream write the encrypted text. This stream will be wrapped by another stream.
-		    FileOutputStream fos = new FileOutputStream(pathTofile);
-		    
-			byte[] keyBytes = Base64.decode(defaultB64KeyString.getBytes("utf-8"),Base64.DEFAULT);
-			keySpec = new SecretKeySpec(keyBytes, "AES");
-			Cipher cipher = Cipher.getInstance(cryptoSpec);
-			cipher.init(Cipher.DECRYPT_MODE, keySpec);
-			CipherInputStream cis = new CipherInputStream(fis, cipher);
-			
-			// Write bytes
-			int b;
-		    byte[] d = new byte[8];
-		    while((b = cis.read(d)) != -1) {
-		        fos.write(d, 0, b);
-		    }
-		    fos.flush();
-		    fos.close();
-		    cis.close();
-			
-		} catch (UnsupportedEncodingException e) {
+			FileInputStream is = new FileInputStream(pathToEncryptedFile);
+			FileOutputStream os = new FileOutputStream(pathTofile);
+			encryptOrDecrypt(defaultB64KeyString, Cipher.DECRYPT_MODE, is, os);
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvalidKeyException e) {
+		}
+	    // This stream write the encrypted text. This stream will be wrapped by another stream.
+	}
+
+	public void encryptOrDecrypt(String key, int mode, InputStream is, OutputStream os) {
+		try{
+			DESKeySpec dks = new DESKeySpec(key.getBytes());
+			SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
+			SecretKey desKey = skf.generateSecret(dks);
+			Cipher cipher = Cipher.getInstance("DES"); // DES/ECB/PKCS5Padding for SunJCE
+	
+			if (mode == Cipher.ENCRYPT_MODE) {
+				cipher.init(Cipher.ENCRYPT_MODE, desKey);
+				CipherInputStream cis = new CipherInputStream(is, cipher);
+				doCopy(cis, os);
+			} else if (mode == Cipher.DECRYPT_MODE) {
+				cipher.init(Cipher.DECRYPT_MODE, desKey);
+				CipherOutputStream cos = new CipherOutputStream(os, cipher);
+				doCopy(is, cos);
+			}
+		}catch(InvalidKeyException e){
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch(IOException e){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
@@ -108,13 +78,23 @@ public class CryptoTool {
 		} catch (NoSuchPaddingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (InvalidKeySpecException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+	}
+
+	public void doCopy(InputStream is, OutputStream os) throws IOException {
+		byte[] bytes = new byte[64];
+		int numBytes;
+		while ((numBytes = is.read(bytes)) != -1) {
+			os.write(bytes, 0, numBytes);
+		}
+		os.flush();
+		os.close();
+		is.close();
 	}
 
 }
