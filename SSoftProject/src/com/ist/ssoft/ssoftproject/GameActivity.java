@@ -70,6 +70,17 @@ public class GameActivity extends Activity {
 
 	}
 
+	@Override
+	protected void onResume() {
+		Cursor c = db.rawQuery("SELECT * FROM userPoints WHERE username='"+username+"'", null);
+		if(c.moveToFirst()) {
+			int points = c.getInt(1);
+			 		 
+			pointTextView.setText(Integer.toString(points));
+		}
+		super.onResume();
+	}
+
 	public void bePremium(View view){
 		 db.execSQL("UPDATE userPremium SET premium ='1' WHERE username='"+username+"'");
 
@@ -84,4 +95,5 @@ public class GameActivity extends Activity {
 		 }
 
 	}
+
 }

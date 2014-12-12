@@ -118,7 +118,7 @@ public class LoginActivity extends Activity {
 			// form field with an error.
 			focusView.requestFocus();
 		} else {
-			Cursor c = db.rawQuery("SELECT * FROM user WHERE username='"+mUsername+"' AND password='"+mPassword+"'", null);
+			Cursor c = db.rawQuery("SELECT * FROM user WHERE (username='"+mUsername+"' OR email='"+mUsername+"') AND password='"+mPassword+"'", null);
 			 
 			 if(c.moveToFirst()){
 				 intent = new Intent(this, GameActivity.class);

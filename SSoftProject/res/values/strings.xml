@@ -17,5 +17,5 @@
     <string name="premium">Be Premium</string>
     <string name="title_activity_shop">ShopActivity</string>
     <string name="error_field_required">Error: Field is Required</string>
-
+    <string name="usernameOrEmail">Username or Email</string>
 </resources>

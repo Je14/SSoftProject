@@ -69,21 +69,22 @@ public final class R {
         public static final int double_points=0x7f05000c;
         public static final int email=0x7f050005;
         public static final int error_field_required=0x7f05000f;
-        public static final int example_shop1=0x7f050012;
+        public static final int example_shop1=0x7f050013;
         public static final int get_point=0x7f050009;
         public static final int hello_world=0x7f050002;
-        public static final int hundred_points=0x7f050013;
-        public static final int login=0x7f050011;
+        public static final int hundred_points=0x7f050014;
+        public static final int login=0x7f050012;
         public static final int password=0x7f050007;
         public static final int points=0x7f05000a;
         public static final int premium=0x7f05000d;
-        public static final int register=0x7f050010;
+        public static final int register=0x7f050011;
         public static final int shop=0x7f05000b;
         public static final int title_activity_game=0x7f050008;
         public static final int title_activity_login=0x7f050003;
         public static final int title_activity_register=0x7f050004;
         public static final int title_activity_shop=0x7f05000e;
         public static final int username=0x7f050006;
+        public static final int usernameOrEmail=0x7f050010;
     }
     public static final class style {
         /** 
